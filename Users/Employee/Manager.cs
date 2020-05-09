@@ -13,12 +13,17 @@ namespace LibraryMS
         public void AddNewEmployee(string id, string password)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            Library.Librarians.Add(new Librarian(id, password));
+            if (!Library.Librarians.Any(Librarian => Librarian.Id == id))
+            {
+                Library.Librarians.Add(new Librarian(id, password));
+                Program.PrintErrorMessage("Done!");
+            }
+            Program.PrintErrorMessage("This is ID, it already exists. So can not add this employee with this ID");
         }
         public bool RemoveEmployee(string id)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Librarian = Library.Librarians.SingleOrDefault(librarian => librarian.Id == id);
+            var Librarian = Library.Librarians?.SingleOrDefault(librarian => librarian.Id == id);
             if (Librarian != null)
             {
                 Library.Librarians.Remove(Librarian);

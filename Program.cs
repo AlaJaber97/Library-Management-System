@@ -298,11 +298,11 @@ namespace LibraryMS
                             case 3:
                                 Librarian.ManageRequest(); 
                                 break;
-                            case 5:
+                            case 4:
                                 Librarian.ShowOrders();
                                 Console.WriteLine("Press enter to continue"); Console.ReadKey();
                                 return;
-                            case 4:
+                            case 5:
                                 Console.Clear();
                                 return;
                             default:
