@@ -288,9 +288,7 @@ namespace LibraryMS
                             case 2:
                                 {
                                     Console.Write("Enter serial number book: "); var serial = Console.ReadLine().Trim();
-                                    if (!Librarian.RemoveBook(serial))
-                                        PrintErrorMessage("this book is not exist in your library!!");
-                                    else
+                                    if (Librarian.RemoveBook(serial))
                                         PrintSuccessedMessage("this book is removed..");
                                     Console.WriteLine("Press enter to continue"); Console.ReadKey();
                                 }

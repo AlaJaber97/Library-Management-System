@@ -13,8 +13,8 @@ namespace LibraryMS
         public double Price { get; set; }
         public List<Copy> Copies { get; set; }
         public List<string> KeyWords { get; set; }
-        public int AvailableCopies { get; set; }
-        public int NumberReserve { get; set; }
+        public int AvailableCopies => Copies != null ? Copies.Count(copy => copy.Status == StatusBook.Available) : 0;
+        public int NumberReserve => Copies != null ? Copies.Count(copy => copy.Status == StatusBook.Reserve) : 0;
 
         public Book(string serialnumber,string name, List<string> keywords)
         {
@@ -25,10 +25,9 @@ namespace LibraryMS
         }
         public void SetInfoBook(int available_copies, double price)
         {
-            this.AvailableCopies = available_copies;
             this.Price = price;
             int IdCopy = 1;
-            while (IdCopy++ <= AvailableCopies)
+            while (IdCopy++ <= available_copies)
                 Copies.Add(new Copy(IdCopy.ToString()));
         }
         public bool SellingCopies(int quntity)

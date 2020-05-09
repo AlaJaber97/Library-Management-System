@@ -91,9 +91,16 @@ namespace LibraryMS
             var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == serialnumber);
             if (Book != null)
             {
-                Library.Books.Remove(Book);
-                return true;
+                if (Book.NumberReserve == 0)
+                {
+                    Library.Books.Remove(Book);
+                    return true;
+                }
+
+                Program.PrintErrorMessage("there is a reservation for this book, so it cannot be deleted until the reservation expires!");
+                return false;
             }
+            Program.PrintErrorMessage("this book is not exist in your library!!");
             return false;
         }
         private bool ConfirmBuyBook(Order order)

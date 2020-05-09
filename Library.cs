@@ -39,10 +39,10 @@ namespace LibraryMS
             //Can not user Librarian.AddNewBook(.........), because that will cause recursion
             Books = new List<Book>()
             {
-                new Book("1234565","Knight Of Joy", new List<string>{ "knight","of","joy" }),
-                new Book("1654546","Wife Of Nightmares", new List<string>{ "wife", "of", "nightmares" }),
-                new Book("1645468","Slaves Of The Gods", new List<string>{ "slaves", "of", "the", "god", "gods" }),
-                new Book("4654658","Rebels Of Water", new List<string>{ "rebels", "of", "water" }),
+                new Book("1","Knight Of Joy", new List<string>{ "knight","of","joy" }),
+                new Book("2","Wife Of Nightmares", new List<string>{ "wife", "of", "nightmares" }),
+                new Book("3","Slaves Of The Gods", new List<string>{ "slaves", "of", "the", "god", "gods" }),
+                new Book("4","Rebels Of Water", new List<string>{ "rebels", "of", "water" }),
             };
             Books.ForEach(book => book.SetInfoBook(10, 10.60));
 
