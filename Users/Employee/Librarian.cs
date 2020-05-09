@@ -20,7 +20,7 @@ namespace LibraryMS
         public void ManageRequest()
         {
             var Library = LibraryMS.Library.GetLibrary();
-            foreach (var request in Library.Orders.Where(order=> order.StatusOrder == StatusOrder.Check))
+            foreach (var request in Library.Orders?.Where(order=> order.StatusOrder == StatusOrder.Check))
             {
                 Console.Clear();
                 Console.WriteLine("==========================================");
@@ -76,19 +76,19 @@ namespace LibraryMS
         public bool AddNewBook(string serialnumber, string name,List<string> keywords, int copies_number, double price)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            if (Library.Books.Where(book => book.SerialNumber == serialnumber).Count() == 0)
-            {
-                var Book = new Book(serialnumber, name, keywords);
-                Book.SetInfoBook(copies_number, price);
-                Library.Books.Add(Book);
-                return true;
-            }
-            return false;
+            var Count = Library.Books?.Count(book => book.SerialNumber == serialnumber);
+            if (Count > 0) return false;
+
+            var Book = new Book(serialnumber, name, keywords);
+            Book.SetInfoBook(copies_number, price);
+            Library.Books.Add(Book);
+            return true;
+            
         }
         public bool RemoveBook(string serialnumber)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == serialnumber);
+            var Book = Library.Books?.SingleOrDefault(item => item.SerialNumber == serialnumber);
             if (Book != null)
             {
                 if (Book.NumberReserve == 0)
@@ -96,7 +96,6 @@ namespace LibraryMS
                     Library.Books.Remove(Book);
                     return true;
                 }
-
                 Program.PrintErrorMessage("there is a reservation for this book, so it cannot be deleted until the reservation expires!");
                 return false;
             }
@@ -106,7 +105,7 @@ namespace LibraryMS
         private bool ConfirmBuyBook(Order order)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == order.BookRef);
+            var Book = Library.Books?.SingleOrDefault(item => item.SerialNumber == order.BookRef);
             if (Book != null)
             {
                 var isDone = Book.SellingCopies(order.Quntity); 
@@ -125,7 +124,7 @@ namespace LibraryMS
         private bool ConfirmReserveBook(Order order)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == order.BookRef);
+            var Book = Library.Books?.SingleOrDefault(item => item.SerialNumber == order.BookRef);
             if (Book != null)
             {
                 var Copy = Book.ReservingCopy();
@@ -149,7 +148,7 @@ namespace LibraryMS
         private bool ConfirmReturnBook(Order order)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == order.BookRef);
+            var Book = Library.Books?.SingleOrDefault(item => item.SerialNumber == order.BookRef);
             if (Book != null)
             {
                 var isDone = Book.ReturnCopy(order.CopyRef);
@@ -168,7 +167,7 @@ namespace LibraryMS
         private bool ConfirmExtendDate(Order order)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(item => item.SerialNumber == order.BookRef);
+            var Book = Library.Books?.SingleOrDefault(item => item.SerialNumber == order.BookRef);
             if (Book != null)
             {
                 var isDone = Book.ExtendDueCopy(order.CopyRef, order.Total_Day);

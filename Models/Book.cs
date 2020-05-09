@@ -32,7 +32,9 @@ namespace LibraryMS
         }
         public bool SellingCopies(int quntity)
         {
-            var AvailableCopies = Copies.Where(copy => copy.Status == StatusBook.Available).ToList();
+            var AvailableCopies = Copies?.Where(copy => copy.Status == StatusBook.Available).ToList();
+            if (AvailableCopies == null) return false;
+
             if (AvailableCopies.Count() >= quntity)
             {
                 AvailableCopies.Take(quntity).ToList()
@@ -43,7 +45,9 @@ namespace LibraryMS
         }
         public Copy ReservingCopy()
         {
-            var AvailableCopies = Copies.Where(copy => copy.Status == StatusBook.Available);
+            var AvailableCopies = Copies?.Where(copy => copy.Status == StatusBook.Available);
+            if (AvailableCopies == null) return null;
+
             if (AvailableCopies.Count() >= 1)
             {
                 var Copy = AvailableCopies.First();
@@ -55,7 +59,9 @@ namespace LibraryMS
         }
         public bool ReturnCopy(string id_copy)
         {
-            var Copy = Copies.SingleOrDefault(copy => copy.Id == id_copy);
+            var Copy = Copies?.SingleOrDefault(copy => copy.Id == id_copy);
+            if (Copy == null) return false;
+
             if (Copy != null)
             {
                 Copy.Status = StatusBook.Available;
@@ -66,7 +72,9 @@ namespace LibraryMS
         }
         public bool ExtendDueCopy(string id_copy, int number_day)
         {
-            var Copy = Copies.SingleOrDefault(copy => copy.Id == id_copy);
+            var Copy = Copies?.SingleOrDefault(copy => copy.Id == id_copy);
+            if (Copy == null) return false;
+
             if (Copy != null)
             {
                 Copy.DueDateReserve = Copy.DueDateReserve.Value.AddDays(number_day);

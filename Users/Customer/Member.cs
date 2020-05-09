@@ -18,7 +18,7 @@ namespace LibraryMS
         public void ShowBookReserve()
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var records = Library.Orders.Where(record =>
+            var records = Library.Orders?.Where(record =>
             record.MemberRef == this.UserName);
 
             foreach (var record in records)
@@ -27,7 +27,7 @@ namespace LibraryMS
         public override void RequestBuyBook(string id_book, int quantity)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(book => book.SerialNumber == id_book);
+            var Book = Library.Books?.SingleOrDefault(book => book.SerialNumber == id_book);
             if (Book != null)
             {
                 Library.Orders.Add(new Order
@@ -47,7 +47,7 @@ namespace LibraryMS
         public void RequestReserveBook(string id_book)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(book => book.SerialNumber == id_book);
+            var Book = Library.Books?.SingleOrDefault(book => book.SerialNumber == id_book);
             if (Book != null)
             {
                 Library.Orders.Add(new Order
@@ -66,10 +66,10 @@ namespace LibraryMS
         public void RequestReturnBook(string id_order)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Order = Library.Orders.SingleOrDefault(order => order.Id == id_order);
+            var Order = Library.Orders?.SingleOrDefault(order => order.Id == id_order);
             if (Order != null)
             {
-                var Book = Library.Books.SingleOrDefault(book => book.SerialNumber == Order.BookRef);
+                var Book = Library.Books?.SingleOrDefault(book => book.SerialNumber == Order.BookRef);
                 if (Book != null)
                 {
                     Order.TypeOrder = TypeOrder.Return;
@@ -88,10 +88,10 @@ namespace LibraryMS
         public void RequestExtendDate(string id_order, int total_day)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Order = Library.Orders.SingleOrDefault(order => order.Id == id_order);
+            var Order = Library.Orders?.SingleOrDefault(order => order.Id == id_order);
             if (Order != null)
             {
-                var Book = Library.Books.SingleOrDefault(book => book.SerialNumber == Order.BookRef);
+                var Book = Library.Books?.SingleOrDefault(book => book.SerialNumber == Order.BookRef);
                 if (Book != null)
                 {
 

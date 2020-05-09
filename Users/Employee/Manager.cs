@@ -8,14 +8,13 @@ namespace LibraryMS
 {
     public class Manager: Administration
     {
-        public Manager(string id, string password) : base(id, password)
-        { }
+        public Manager(string id, string password) : base(id, password) { }
         public void AddNewEmployee(string id, string password)
         {
             var Library = LibraryMS.Library.GetLibrary();
             if (!Library.Librarians.Any(Librarian => Librarian.Id == id))
             {
-                Library.Librarians.Add(new Librarian(id, password));
+                Library.Librarians?.Add(new Librarian(id, password));
                 Program.PrintErrorMessage("Done!");
             }
             Program.PrintErrorMessage("This is ID, it already exists. So can not add this employee with this ID");

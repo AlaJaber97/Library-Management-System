@@ -11,7 +11,7 @@ namespace LibraryMS
         public override void RequestBuyBook(string id_book, int quantity)
         {
             var Library = LibraryMS.Library.GetLibrary();
-            var Book = Library.Books.SingleOrDefault(book => book.SerialNumber == id_book);
+            var Book = Library.Books?.SingleOrDefault(book => book.SerialNumber == id_book);
             if (Book != null)
             {
                 Library.Orders.Add(new Order
